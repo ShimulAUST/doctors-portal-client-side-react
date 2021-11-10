@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import initializeFirebase from "../Pages/Login/Login/Firebase/firebase.init";
-import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile, getIdToken } from "firebase/auth";
 
 //initialize firebase app
 initializeFirebase();
@@ -9,6 +9,8 @@ const useFirebase = () => {
     const [user, setuser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState('');
+    const [admin, setAdmin] = useState(false);
+    const [token, setToken] = useState('');
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
 
@@ -20,6 +22,8 @@ const useFirebase = () => {
                 history.replace('/');
                 const newUser = { email, displayNmar: name }
                 setuser(newUser);
+                //save user to database
+                saveUser(email, name, 'POST');
                 //send name to firebase
                 updateProfile(auth.currentUser, {
                     displayName: name
@@ -59,9 +63,12 @@ const useFirebase = () => {
         setIsLoading(true);
         signInWithPopup(auth, googleProvider)
             .then((result) => {
+                //save user to database
+                const user = result.user;
+                saveUser(user.email, user.displayName, 'PUT');
                 const destination = location?.state?.from || '/';
                 history.replace(destination);
-                const user = result.user;
+
                 setAuthError('');
             }).catch((error) => {
 
@@ -76,6 +83,12 @@ const useFirebase = () => {
             if (user) {
 
                 setuser(user);
+                getIdToken(user)
+                    .then(idToken => {
+                        console.log(idToken);
+                        setToken(idToken);
+                    })
+
             } else {
                 // User is signed out
                 // ...
@@ -85,6 +98,13 @@ const useFirebase = () => {
         });
         return () => unsubscribed;
     }, []);
+
+    useEffect(() => {
+        fetch(`https://lit-forest-68710.herokuapp.com/users/${user.email}`)
+            .then(res => res.json())
+            .then(data => setAdmin(data.admin));
+    }, [user.email]);
+
     const logout = () => {
         setIsLoading(true);
         signOut(auth).then(() => {
@@ -94,8 +114,22 @@ const useFirebase = () => {
         }).finally(() => setIsLoading(false));
 
     }
+    const saveUser = (email, displayName, method) => {
+        const user = { email, displayName };
+        fetch('https://lit-forest-68710.herokuapp.com/users', {
+            method: method,
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => console.log(data));
+    }
     return {
         user,
+        admin,
+        token,
         registerUser,
         loginUser,
         isLoading,

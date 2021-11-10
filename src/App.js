@@ -19,12 +19,7 @@ function App() {
       <AuthProvider>
         <Router>
           <Switch>
-            <PrivateRoute exact path="/appointment">
-              <Appointment></Appointment>
-            </PrivateRoute>
-            <PrivateRoute exact path="/dashboard">
-              <Dashboard></Dashboard>
-            </PrivateRoute>
+
             <Route exact path="/">
               <Home></Home>
             </Route>
@@ -39,6 +34,12 @@ function App() {
             <Route exact path="/register">
               <Register></Register>
             </Route>
+            <PrivateRoute exact path="/appointment">
+              <Appointment></Appointment>
+            </PrivateRoute>
+            <PrivateRoute exact path="/dashboard">
+              <Dashboard></Dashboard>
+            </PrivateRoute>
 
           </Switch>
         </Router>
