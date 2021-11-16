@@ -29,6 +29,7 @@ import {
 import AdminMake from '../AdminMake/AdminMake';
 import useAuth from '../../../hooks/useAuth';
 import AdminRoute from '../../Login/AdminRoute/AdminRoute';
+import AddDoctor from '../../AddDoctor/AddDoctor';
 
 
 
@@ -140,12 +141,11 @@ function Dashboard(props) {
                         <DashBoardHome></DashBoardHome>
                         <AdminMake></AdminMake>
                     </Route>
+
                     <AdminRoute path={`${path}/adminMake`}>
                         <AdminMake></AdminMake>
                     </AdminRoute>
-                    <AdminRoute path={`${path}/addDoctor`}>
 
-                    </AdminRoute>
                 </Switch>
 
             </Box>

@@ -11,6 +11,9 @@ import Register from './Pages/Login/Register/Register';
 import AuthProvider from './context/AuthProvider/AuthProvider';
 import PrivateRoute from './Pages/Login/PrivateRoute/PrivateRoute';
 import Dashboard from './Pages/Dashboard/Dashboard/Dashboard';
+import Payment from './Pages/Dashboard/Payment/Payment';
+import AdminRoute from './Pages/Login/AdminRoute/AdminRoute';
+import AddDoctor from './Pages/AddDoctor/AddDoctor';
 
 
 function App() {
@@ -40,6 +43,12 @@ function App() {
             <PrivateRoute exact path="/dashboard">
               <Dashboard></Dashboard>
             </PrivateRoute>
+            <PrivateRoute exact path="/dashboard/addDoctor">
+              <AddDoctor></AddDoctor>
+            </PrivateRoute>
+            <Route path="/dashboard/payment/:appointmentId">
+              <Payment></Payment>
+            </Route>
 
           </Switch>
         </Router>
