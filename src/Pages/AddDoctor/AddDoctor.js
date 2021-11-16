@@ -1,6 +1,6 @@
 import { Alert, Button, Input, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import Navigation from '../Shared/Navigation/Navigation';
+
 
 const AddDoctor = () => {
     const [name, setName] = useState('');
@@ -34,7 +34,6 @@ const AddDoctor = () => {
     }
     return (
         <div>
-            <Navigation></Navigation>
             <h2>Add a Doctor</h2>
             <form onSubmit={handleSubmit}>
                 <TextField id="standard-basic"

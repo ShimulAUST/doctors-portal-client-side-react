@@ -1,7 +1,7 @@
 import './App.css';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
 } from "react-router-dom";
 import Home from './Pages/Home/Home/Home';
@@ -13,6 +13,9 @@ import PrivateRoute from './Pages/Login/PrivateRoute/PrivateRoute';
 import Dashboard from './Pages/Dashboard/Dashboard/Dashboard';
 import Payment from './Pages/Dashboard/Payment/Payment';
 import AddDoctor from './Pages/AddDoctor/AddDoctor';
+import AdminMake from './Pages/Dashboard/AdminMake/AdminMake';
+import DashBoardHome from './Pages/Dashboard/DashBoardHome/DashBoardHome';
+import AdminRoute from './Pages/Login/AdminRoute/AdminRoute';
 
 
 function App() {
@@ -20,35 +23,49 @@ function App() {
     <div className="App">
       <AuthProvider>
         <Router>
-          <Switch>
-            <Route exact path="/">
-              <Home></Home>
+          <Routes>
+            <Route exact path="/" element={<Home></Home>}>
+
             </Route>
-            <Route exact path="/home">
-              <Home></Home>
+            <Route exact path="/home" element={<Home></Home>}>
             </Route>
             <Route exact path="/about">
             </Route>
-            <Route exact path="/login">
-              <Login></Login>
+            <Route path="/login" element={<Login></Login>}>
+
             </Route>
-            <Route exact path="/register">
-              <Register></Register>
+            <Route path="/register" element={<Register></Register>}>
             </Route>
-            <PrivateRoute exact path="/appointment">
+            <Route exact path="/appointment" element={<PrivateRoute>
               <Appointment></Appointment>
-            </PrivateRoute>
-            <PrivateRoute exact path="/dashboard">
+            </PrivateRoute>}>
+
+            </Route>
+            <Route path="/dashboard" element={<PrivateRoute>
               <Dashboard></Dashboard>
             </PrivateRoute>
-            <PrivateRoute exact path="/dashboard/addDoctor">
-              <AddDoctor></AddDoctor>
-            </PrivateRoute>
-            <Route path="/dashboard/payment/:appointmentId">
-              <Payment></Payment>
+            }>
+              <Route exact path="/dashboard" element={
+                <DashBoardHome></DashBoardHome>
+              }>
+              </Route>
+              <Route path={`/dashboard/adminMake`} element={<AdminRoute>
+                <AdminMake></AdminMake>
+              </AdminRoute>}>
+              </Route>
+              <Route path="/dashboard/payment/:appointmentId" element={<PrivateRoute><Payment></Payment></PrivateRoute>}>
+              </Route>
+              <Route exact path="/dashboard/addDoctor" element={
+                <PrivateRoute>
+                  <AddDoctor></AddDoctor>
+                </PrivateRoute>
+              }>
+              </Route>
             </Route>
 
-          </Switch>
+
+
+          </Routes>
         </Router>
       </AuthProvider>
     </div>

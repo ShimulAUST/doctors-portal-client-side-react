@@ -17,16 +17,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
-import DashBoardHome from '../DashBoardHome/DashBoardHome';
 import {
-    Switch,
-    Route,
-    Link,
-    useRouteMatch
+    Outlet,
+    Link
 } from "react-router-dom";
-import AdminMake from '../AdminMake/AdminMake';
 import useAuth from '../../../hooks/useAuth';
-import AdminRoute from '../../Login/AdminRoute/AdminRoute';
 
 
 
@@ -35,7 +30,6 @@ const drawerWidth = 200;
 function Dashboard(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    let { path, url } = useRouteMatch();
     const { admin } = useAuth();
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -46,11 +40,11 @@ function Dashboard(props) {
             <Toolbar />
             <Divider />
             <Link to="/appointment"><Button color="inherit">Appointment</Button></Link>
-            <Link to={`${url}`}><Button color="inherit">Dashboard</Button></Link>
+            <Link to="/dashboard"><Button color="inherit">Dashboard</Button></Link>
             {
                 admin && <Box>
-                    <Link to={`${url}/adminMake`}><Button color="inherit">Make Admin</Button></Link>
-                    <Link to={`${url}/addDoctor`}><Button color="inherit">Add Doctor</Button></Link>
+                    <Link to="/dashboard/adminMake"><Button color="inherit">Make Admin</Button></Link>
+                    <Link to="/dashboard/addDoctor"><Button color="inherit">Add Doctor</Button></Link>
 
                 </Box>
             }
@@ -133,17 +127,10 @@ function Dashboard(props) {
             >
                 <Toolbar />
 
-                <Switch>
-                    <Route exact path={path}>
-                        <DashBoardHome></DashBoardHome>
-                        <AdminMake></AdminMake>
-                    </Route>
 
-                    <AdminRoute path={`${path}/adminMake`}>
-                        <AdminMake></AdminMake>
-                    </AdminRoute>
 
-                </Switch>
+                <Outlet></Outlet>
+
 
             </Box>
         </Box>
