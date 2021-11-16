@@ -12,7 +12,6 @@ import AuthProvider from './context/AuthProvider/AuthProvider';
 import PrivateRoute from './Pages/Login/PrivateRoute/PrivateRoute';
 import Dashboard from './Pages/Dashboard/Dashboard/Dashboard';
 import Payment from './Pages/Dashboard/Payment/Payment';
-import AdminRoute from './Pages/Login/AdminRoute/AdminRoute';
 import AddDoctor from './Pages/AddDoctor/AddDoctor';
 
 

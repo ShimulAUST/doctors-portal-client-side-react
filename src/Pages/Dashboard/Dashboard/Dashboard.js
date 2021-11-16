@@ -19,17 +19,14 @@ import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 import DashBoardHome from '../DashBoardHome/DashBoardHome';
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
     Link,
-    useParams,
     useRouteMatch
 } from "react-router-dom";
 import AdminMake from '../AdminMake/AdminMake';
 import useAuth from '../../../hooks/useAuth';
 import AdminRoute from '../../Login/AdminRoute/AdminRoute';
-import AddDoctor from '../../AddDoctor/AddDoctor';
 
 
 

@@ -4,7 +4,7 @@ import React from 'react';
 const Doctor = ({ doctor }) => {
     return (
         <Grid item xs={12} sm={6} md={4}>
-            <img style={{ width: '200px', height: '200px' }} src={`data:image/jpg;base64,${doctor.image}`} />
+            <img style={{ width: '200px', height: '200px' }} src={`data:image/jpg;base64,${doctor.image}`} alt="" />
             <Typography>
                 {doctor.name}
             </Typography>
